@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic OS Kernel Guardian | Real-Time Multi-Agent OS Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome / Lucide Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Header Navigation -->
+        <header class="main-header">
+            <div class="brand-title">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h1>AGENTIC OS KERNEL GUARDIAN</h1>
+                    <span class="subtitle">Decentralized Multi-Agent Resource Barter & Autonomous Self-Healing Daemon</span>
+                </div>
+            </div>
+            
+            <div class="system-status-pills">
+                <div class="status-pill status-active">
+                    <span class="pulse-dot"></span>
+                    <span id="system-status-text">KERNEL GUARDIAN PROTECTED</span>
+                </div>
+                <div class="metric-badge">
+                    <i class="fa-solid fa-bolt-lightning text-amber"></i>
+                    <span>Heals Executed: <strong id="total-heals-count">0</strong></span>
+                </div>
+                <div class="metric-badge">
+                    <i class="fa-solid fa-shield-cat text-green"></i>
+                    <span>Crashes Prevented: <strong id="crashes-prevented-count">0</strong></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content Grid -->
+        <main class="dashboard-grid">
+            
+            <!-- Row 1: System Telemetry Gauges -->
+            <section class="telemetry-row">
+                <!-- CPU Gauge Card -->
+                <div class="glass-card telemetry-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-microchip"></i> CPU Core Utilization</h3>
+                        <span class="metric-val" id="cpu-total-pct">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-fill fill-cpu" id="cpu-bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="sub-metrics" id="cpu-cores-list">
+                        <!-- Cores injected dynamically -->
+                    </div>
+                </div>
+
+                <!-- RAM Gauge Card -->
+                <div class="glass-card telemetry-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-memory"></i> RAM & Swap Memory</h3>
+                        <span class="metric-val" id="ram-used-pct">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-fill fill-ram" id="ram-bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="memory-details">
+                        <span>Used: <strong id="ram-used-gb">0.0 GB</strong></span>
+                        <span>Total: <strong id="ram-total-gb">0.0 GB</strong></span>
+                    </div>
+                </div>
+
+                <!-- I/O & Network Card -->
+                <div class="glass-card telemetry-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-hard-drive"></i> Disk & Socket Telemetry</h3>
+                        <span class="badge badge-normal" id="io-status-badge">Normal Latency</span>
+                    </div>
+                    <div class="io-metrics-grid">
+                        <div class="io-box">
+                            <i class="fa-solid fa-arrow-down-long"></i>
+                            <div>
+                                <span class="label">Read Traffic</span>
+                                <strong id="io-read-bytes">0 KB/s</strong>
+                            </div>
+                        </div>
+                        <div class="io-box">
+                            <i class="fa-solid fa-arrow-up-long"></i>
+                            <div>
+                                <span class="label">Write Traffic</span>
+                                <strong id="io-write-bytes">0 KB/s</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 2: Multi-Agent Domain Matrix & Live Negotiation Console -->
+            <section class="agents-console-row">
+                
+                <!-- Active Agents Matrix -->
+                <div class="glass-card agents-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-network-wired"></i> Agentic Ecosystem Status</h3>
+                    </div>
+                    <div class="agents-grid">
+                        <div class="agent-pill active" id="agent-mem">
+                            <i class="fa-solid fa-brain"></i>
+                            <div class="agent-info">
+                                <strong>Memory Agent</strong>
+                                <span>RAM & Compression</span>
+                            </div>
+                            <span class="dot"></span>
+                        </div>
+                        <div class="agent-pill active" id="agent-cpu">
+                            <i class="fa-solid fa-microchip"></i>
+                            <div class="agent-info">
+                                <strong>CPU Agent</strong>
+                                <span>Priority & Affinity</span>
+                            </div>
+                            <span class="dot"></span>
+                        </div>
+                        <div class="agent-pill active" id="agent-io">
+                            <i class="fa-solid fa-hard-drive"></i>
+                            <div class="agent-info">
+                                <strong>I/O Agent</strong>
+                                <span>Disk Queue Latency</span>
+                            </div>
+                            <span class="dot"></span>
+                        </div>
+                        <div class="agent-pill active" id="agent-net">
+                            <i class="fa-solid fa-globe"></i>
+                            <div class="agent-info">
+                                <strong>Network Agent</strong>
+                                <span>Socket Traffic</span>
+                            </div>
+                            <span class="dot"></span>
+                        </div>
+                        <div class="agent-pill active" id="agent-sec">
+                            <i class="fa-solid fa-shield-cat"></i>
+                            <div class="agent-info">
+                                <strong>Security Agent</strong>
+                                <span>Rogue & Miner Check</span>
+                            </div>
+                            <span class="dot"></span>
+                        </div>
+                        <div class="agent-pill arbiter-pill" id="agent-arbiter">
+                            <i class="fa-solid fa-gavel"></i>
+                            <div class="agent-info">
+                                <strong>Decision Arbiter</strong>
+                                <span>Utility Consensus Core</span>
+                            </div>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Agent Negotiation Terminal -->
+                <div class="glass-card terminal-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-terminal"></i> Multi-Agent Barter Protocol Console</h3>
+                        <span class="live-tag"><i class="fa-solid fa-circle"></i> WebSocket Live Stream</span>
+                    </div>
+                    <div class="terminal-body" id="negotiation-terminal">
+                        <div class="term-line info">[SYSTEM] Kernel Guardian Agentic Ecosystem online and listening...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 3: Process Guardian & Interactive Stress Studio -->
+            <section class="bottom-row">
+                
+                <!-- Process Table -->
+                <div class="glass-card process-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-list-check"></i> Top Process Guardian Matrix</h3>
+                        <span class="sub-text">Monitored non-destructively</span>
+                    </div>
+                    <div class="table-container">
+                        <table class="process-table">
+                            <thead>
+                                <tr>
+                                    <th>PID</th>
+                                    <th>Process Name</th>
+                                    <th>CPU Usage</th>
+                                    <th>RAM Usage</th>
+                                    <th>Type</th>
+                                    <th>Guardian Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="process-table-body">
+                                <!-- Process rows dynamically generated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Interactive Stress Control Studio -->
+                <div class="glass-card stress-studio-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-vial"></i> Stress Test & Demonstration Studio</h3>
+                    </div>
+                    <p class="studio-desc">Trigger synthetic system anomalies to demonstrate real-time multi-agent negotiation and zero-crash self-healing live during faculty review.</p>
+
+                    <div class="studio-actions">
+                        <button class="btn btn-warning" id="btn-stress-mem">
+                            <i class="fa-solid fa-droplet-slash"></i> Trigger Memory Leak (+500MB)
+                        </button>
+                        <button class="btn btn-danger" id="btn-stress-cpu">
+                            <i class="fa-solid fa-fire"></i> Trigger CPU Spike (30s)
+                        </button>
+                        <button class="btn btn-secondary" id="btn-stress-stop">
+                            <i class="fa-solid fa-circle-stop"></i> Stop All Stressors
+                        </button>
+                    </div>
+
+                    <!-- Patent Core Math Box -->
+                    <div class="patent-math-box">
+                        <div class="math-header"><i class="fa-solid fa-certificate text-gold"></i> Patent Core Utility Function</div>
+                        <div class="math-formula">
+                            $$Utility = \Delta \text{System Health} - \Delta \text{User Disruption}$$
+                        </div>
+                        <p class="math-sub">Ensures non-destructive mitigation selection without process termination.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Custom JS Script -->
+    <script src="/static/app.js"></script>
+</body>
+</html>
