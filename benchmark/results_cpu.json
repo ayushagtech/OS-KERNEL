@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "configuration": {
+    "duration_seconds": 3.0,
+    "sample_interval_seconds": 0.25,
+    "repetitions": 1,
+    "memory_mb": 64,
+    "io_mb": 32,
+    "network_packets": 2000,
+    "critical_pressure": 0.75,
+    "recovery_pressure": 0.5,
+    "random_seed": 7,
+    "workloads": [
+      "cpu_pressure"
+    ],
+    "conditions": [
+      "baseline",
+      "guardian",
+      "guardian_without_prediction",
+      "guardian_without_adaptive_history",
+      "guardian_without_cross_resource_bidding",
+      "guardian_single_agent",
+      "full_guardian"
+    ]
+  },
+  "results": [
+    {
+      "experiment_id": "baseline-cpu_pressure-1788850942235",
+      "timestamp": 1788850942.2353716,
+      "configuration": {
+        "duration_seconds": 3.0,
+        "sample_interval_seconds": 0.25,
+        "repetitions": 1,
+        "memory_mb": 64,
+        "io_mb": 32,
+        "network_packets": 2000,
+        "critical_pressure": 0.75,
+        "recovery_pressure": 0.5,
+        "random_seed": 7,
+        "workloads": [
+          "cpu_pressure"
+        ],
+        "conditions": [
+          "baseline",
+          "guardian",
+          "guardian_without_prediction",
+          "guardian_without_adaptive_history",
+          "guardian_without_cross_resource_bidding",
+          "guardian_single_agent",
+          "full_guardian"
+        ]
+      },
+      "condition": "baseline",
+      "workload": "cpu_pressure",
+      "resource_metrics": {
+        "peak_pressure": {
+          "cpu": 0.0520625,
+          "memory": 0.7138503707639102,
+          "swap": 0.138,
+          "io": 0.014445754716219606,
+          "network": 0.0268
+        },
+        "time_above_critical_seconds": {},
+        "time_to_recovery_seconds": null,
+        "samples": 11,
+        "missing_metrics": [
+          "io",
+          "network"
+        ]
+      },
+      "interventions": [],
+      "outcomes": {
+        "status": "completed",
+        "workload_exit_code": 0,
+        "workload_completion_time_seconds": 3.125,
+        "successful_mitigations": 0,
+        "restoration_successes": 0,
+        "guardian_overhead_cpu_percent": null,
+        "guardian_overhead_memory_bytes": null,
+        "user_disruption_proxy": null
+      },
+      "errors": []
+    },
+    {
+      "experiment_id": "guardian-cpu_pressure-1788850945362",
+      "timestamp": 1788850945.3627305,
+      "configuration": {
+        "duration_seconds": 3.0,
+        "sample_interval_seconds": 0.25,
+        "repetitions": 1,
+        "memory_mb": 64,
+        "io_mb": 32,
+        "network_packets": 2000,
+        "critical_pressure": 0.75,
+        "recovery_pressure": 0.5,
+        "random_seed": 7,
+        "workloads": [
+          "cpu_pressure"
+        ],
+        "conditions": [
+          "baseline",
+          "guardian",
+          "guardian_without_prediction",
+          "guardian_without_adaptive_history",
+          "guardian_without_cross_resource_bidding",
+          "guardian_single_agent",
+          "full_guardian"
+        ]
+      },
+      "condition": "guardian",
+      "workload": "cpu_pressure",
+      "resource_metrics": {
+        "peak_pressure": {
+          "cpu": 0.015625,
+          "memory": 0.7122046250084839,
+          "swap": 0.138
+        },
+        "time_above_critical_seconds": {},
+        "time_to_recovery_seconds": null,
+        "samples": 1,
+        "missing_metrics": [
+          "io",
+          "network"
+        ]
+      },
+      "interventions": [
+        {}
+      ],
+      "outcomes": {
+        "status": "completed",
+        "workload_exit_code": 0,
+        "workload_completion_time_seconds": 14.875,
+        "successful_mitigations": 0,
+        "restoration_successes": 0,
+        "guardian_overhead_cpu_percent": null,
+        "guardian_overhead_memory_bytes": null,
+        "user_disruption_proxy": null
+      },
+      "errors": []
+    },
+    {
+      "experiment_id": "guardian_without_prediction-cpu_pressure-1788850960238",
+      "timestamp": 1788850960.2384481,
+      "configuration": {
+        "duration_seconds": 3.0,
+        "sample_interval_seconds": 0.25,
+        "repetitions": 1,
+        "memory_mb": 64,
+        "io_mb": 32,
+        "network_packets": 2000,
+        "critical_pressure": 0.75,
+        "recovery_pressure": 0.5,
+        "random_seed": 7,
+        "workloads": [
+          "cpu_pressure"
+        ],
+        "conditions": [
+          "baseline",
+          "guardian",
+          "guardian_without_prediction",
+          "guardian_without_adaptive_history",
+          "guardian_without_cross_resource_bidding",
+          "guardian_single_agent",
+          "full_guardian"
+        ]
+      },
+      "condition": "guardian_without_prediction",
+      "workload": "cpu_pressure",
+      "resource_metrics": {
+        "peak_pressure": {},
+        "time_above_critical_seconds": {},
+        "time_to_recovery_seconds": null,
+        "samples": 0,
+        "missing_metrics": []
+      },
+      "interventions": [],
+      "outcomes": {
+        "status": "unsupported_ablation",
+        "reason": "The current Guardian has no runtime feature flags for this ablation."
+      },
+      "errors": []
+    },
+    {
+      "experiment_id": "guardian_without_adaptive_history-cpu_pressure-1788850960238",
+      "timestamp": 1788850960.2384481,
+      "configuration": {
+        "duration_seconds": 3.0,
+        "sample_interval_seconds": 0.25,
+        "repetitions": 1,
+        "memory_mb": 64,
+        "io_mb": 32,
+        "network_packets": 2000,
+        "critical_pressure": 0.75,
+        "recovery_pressure": 0.5,
+        "random_seed": 7,
+        "workloads": [
+          "cpu_pressure"
+        ],
+        "conditions": [
+          "baseline",
+          "guardian",
+          "guardian_without_prediction",
+          "guardian_without_adaptive_history",
+          "guardian_without_cross_resource_bidding",
+          "guardian_single_agent",
+          "full_guardian"
+        ]
+      },
+      "condition": "guardian_without_adaptive_history",
+      "workload": "cpu_pressure",
+      "resource_metrics": {
+        "peak_pressure": {},
+        "time_above_critical_seconds": {},
+        "time_to_recovery_seconds": null,
+        "samples": 0,
+        "missing_metrics": []
+      },
+      "interventions": [],
+      "outcomes": {
+        "status": "unsupported_ablation",
+        "reason": "The current Guardian has no runtime feature flags for this ablation."
+      },
+      "errors": []
+    },
+    {
+      "experiment_id": "guardian_without_cross_resource_bidding-cpu_pressure-1788850960238",
+      "timestamp": 1788850960.2384481,
+      "configuration": {
+        "duration_seconds": 3.0,
+        "sample_interval_seconds": 0.25,
+        "repetitions": 1,
+        "memory_mb": 64,
+        "io_mb": 32,
+        "network_packets": 2000,
+        "critical_pressure": 0.75,
+        "recovery_pressure": 0.5,
+        "random_seed": 7,
+        "workloads": [
+          "cpu_pressure"
+        ],
+        "conditions": [
+          "baseline",
+          "guardian",
+          "guardian_without_prediction",
+          "guardian_without_adaptive_history",
+          "guardian_without_cross_resource_bidding",
+          "guardian_single_agent",
+          "full_guardian"
+        ]
+      },
+      "condition": "guardian_without_cross_resource_bidding",
+      "workload": "cpu_pressure",
+      "resource_metrics": {
+        "peak_pressure": {},
+        "time_above_critical_seconds": {},
+        "time_to_recovery_seconds": null,
+        "samples": 0,
+        "missing_metrics": []
+      },
+      "interventions": [],
+      "outcomes": {
+        "status": "unsupported_ablation",
+        "reason": "The current Guardian has no runtime feature flags for this ablation."
+      },
+      "errors": []
+    },
+    {
+      "experiment_id": "guardian_single_agent-cpu_pressure-1788850960238",
+      "timestamp": 1788850960.2384481,
+      "configuration": {
+        "duration_seconds": 3.0,
+        "sample_interval_seconds": 0.25,
+        "repetitions": 1,
+        "memory_mb": 64,
+        "io_mb": 32,
+        "network_packets": 2000,
+        "critical_pressure": 0.75,
+        "recovery_pressure": 0.5,
+        "random_seed": 7,
+        "workloads": [
+          "cpu_pressure"
+        ],
+        "conditions": [
+          "baseline",
+          "guardian",
+          "guardian_without_prediction",
+          "guardian_without_adaptive_history",
+          "guardian_without_cross_resource_bidding",
+          "guardian_single_agent",
+          "full_guardian"
+        ]
+      },
+      "condition": "guardian_single_agent",
+      "workload": "cpu_pressure",
+      "resource_metrics": {
+        "peak_pressure": {},
+        "time_above_critical_seconds": {},
+        "time_to_recovery_seconds": null,
+        "samples": 0,
+        "missing_metrics": []
+      },
+      "interventions": [],
+      "outcomes": {
+        "status": "unsupported_ablation",
+        "reason": "The current Guardian has no runtime feature flags for this ablation."
+      },
+      "errors": []
+    },
+    {
+      "experiment_id": "full_guardian-cpu_pressure-1788850960238",
+      "timestamp": 1788850960.2384481,
+      "configuration": {
+        "duration_seconds": 3.0,
+        "sample_interval_seconds": 0.25,
+        "repetitions": 1,
+        "memory_mb": 64,
+        "io_mb": 32,
+        "network_packets": 2000,
+        "critical_pressure": 0.75,
+        "recovery_pressure": 0.5,
+        "random_seed": 7,
+        "workloads": [
+          "cpu_pressure"
+        ],
+        "conditions": [
+          "baseline",
+          "guardian",
+          "guardian_without_prediction",
+          "guardian_without_adaptive_history",
+          "guardian_without_cross_resource_bidding",
+          "guardian_single_agent",
+          "full_guardian"
+        ]
+      },
+      "condition": "full_guardian",
+      "workload": "cpu_pressure",
+      "resource_metrics": {
+        "peak_pressure": {
+          "cpu": 0.03125,
+          "memory": 0.7061689559963514,
+          "swap": 0.138
+        },
+        "time_above_critical_seconds": {},
+        "time_to_recovery_seconds": null,
+        "samples": 1,
+        "missing_metrics": [
+          "io",
+          "network"
+        ]
+      },
+      "interventions": [
+        {}
+      ],
+      "outcomes": {
+        "status": "completed",
+        "workload_exit_code": 0,
+        "workload_completion_time_seconds": 8.796999999962281,
+        "successful_mitigations": 0,
+        "restoration_successes": 0,
+        "guardian_overhead_cpu_percent": null,
+        "guardian_overhead_memory_bytes": null,
+        "user_disruption_proxy": null
+      },
+      "errors": []
+    }
+  ]
+}

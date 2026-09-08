@@ -18,7 +18,7 @@
 ---
 
 ## ABSTRACT
-Traditional operating system resource management mechanisms rely on static scheduling heuristics and aggressive fault resolution policies (e.g., the Linux Out-Of-Memory / OOM killer). These conventional approaches suffer from subsystem isolation, cross-subsystem blindness, and destructive process termination that causes unsaved user data loss during severe resource contention. This project presents **Agentic OS Kernel Guardian**, an autonomous self-healing framework powered by a Decentralized Multi-Agent Negotiation Architecture. Operating as a lightweight daemon, the framework deploys 5 domain-specific AI agents (Memory, CPU, I/O, Network, Security) and a Decision Arbiter to dynamically barter system resources. By evaluating proposals using a closed-loop Utility Function ($Utility = \Delta \text{System Health} - \Delta \text{User Disruption}$) and executing non-destructive kernel control hooks (`cgroups v2`, process freezing, priority shifting, CPU affinity clamping), the system achieves a >90% reduction in abrupt process crashes and restores system metrics in under 2 seconds.
+Traditional operating system resource management mechanisms rely on static scheduling heuristics and aggressive fault resolution policies (e.g., the Linux Out-Of-Memory / OOM killer). These conventional approaches suffer from subsystem isolation, cross-subsystem blindness, and destructive process termination that causes unsaved user data loss during severe resource contention. This project presents **Agentic OS Kernel Guardian**, an autonomous self-healing framework powered by a Decentralized Multi-Agent Negotiation Architecture. Operating as a lightweight daemon, the framework deploys 5 domain-specific AI agents (Memory, CPU, I/O, Network, Security) and a Decision Arbiter to dynamically barter system resources. By evaluating proposals using a closed-loop Utility Function ($Utility = \Delta \text{System Health} - \Delta \text{User Disruption}$) and executing available non-destructive process controls (process freezing, priority shifting, and CPU affinity clamping), the system reports measured post-action feedback. Crash-prevention and recovery-rate claims require controlled experiments and are not asserted here.
 
 ---
 
@@ -36,7 +36,7 @@ Operating systems manage critical shared resources including CPU, RAM, Disk I/O,
 The framework introduces a two-tier execution pipeline:
 
 ### 2.1 Multi-Agent Ecosystem
-* **Memory Agent**: Monitors RAM usage, page faults, and swap thrashing; advocates for zRAM memory compression and background process suspension.
+* **Memory Agent**: Monitors RAM usage and swap pressure; advocates for background process suspension. zRAM compression is not currently implemented.
 * **CPU Agent**: Tracks core load and context switching; balances scheduling priorities (`nice`) and thread affinity.
 * **File System (I/O) Agent**: Tracks disk queue latency; throttles background indexers.
 * **Network Agent**: Tracks socket traffic; throttles non-essential background downloads.
@@ -72,13 +72,12 @@ The framework introduces a two-tier execution pipeline:
 ### 4.1 Test Scenarios
 1. **Scenario A (Memory Exhaustion)**: Synthetic memory leak (+500MB buffer allocation).
    * *Traditional OS Result*: OOM killer terminates active background application abruptly.
-   * *Kernel Guardian Result*: Memory Agent asserts state $\rightarrow$ Arbiter freezes background task (`SIGSTOP`) $\rightarrow$ RAM usage drops to safe baseline within 1.2s $\rightarrow$ 0 crashes.
+   * *Kernel Guardian Result*: Memory Agent asserts state $\rightarrow$ Arbiter may freeze a verified background task (`SIGSTOP`) $\rightarrow$ the result is reported with measured feedback. Crash prevention is not claimed without a controlled experiment.
 2. **Scenario B (CPU Spike)**: Rogue high-load background process (95% CPU).
-   * *Kernel Guardian Result*: CPU Agent & Security Agent detect rogue load $\rightarrow$ Arbiter shifts process to idle class (`nice +10`) and clamps CPU affinity to 1 core $\rightarrow$ Foreground user responsiveness maintained.
+   * *Kernel Guardian Result*: CPU Agent and Security Agent may propose priority and affinity controls for a verified background process; the daemon reports whether measured feedback shows improvement. Foreground responsiveness is not asserted without a controlled experiment.
 
 ### 4.2 Performance Metrics
-* **Recovery Time**: < 1.5 seconds average
-* **Daemon Overhead**: < 1.8% CPU and < 25MB RAM during steady-state monitoring
+* Recovery time and daemon overhead require measurement in a controlled benchmark; no validated values are claimed by the current implementation.
 
 ---
 

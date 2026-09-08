@@ -4,6 +4,11 @@ import os
 import sys
 import logging
 
+try:
+    import psutil
+except ImportError:
+    psutil = None
+
 logger = logging.getLogger("StressSimulator")
 
 class SyntheticWorkloadManager:
@@ -11,36 +16,59 @@ class SyntheticWorkloadManager:
         self.active_stressors = {}
         self.stop_events = {}
 
-    def trigger_memory_leak(self, mb_to_allocate: int = 500) -> dict:
-        """Simulates a memory leak by allocating memory buffers in background."""
+    def trigger_memory_leak(self, mb_to_allocate: int = 500, duration_sec: int = 30) -> dict:
+        """Create bounded, real RAM pressure and release it after the duration."""
         if "mem_leak" in self.active_stressors and self.active_stressors["mem_leak"].is_alive():
             return {"status": "active", "message": "Memory leak stressor already running."}
 
+        requested_mb = max(1, int(mb_to_allocate))
+        duration_sec = max(1, int(duration_sec))
+        if psutil:
+            available_mb = max(1, int(psutil.virtual_memory().available / (1024 * 1024)))
+            # Never consume more than 10% of currently available RAM, and cap
+            # the demonstration workload even on machines with ample memory.
+            safe_limit_mb = min(512, max(1, int(available_mb * 0.10)))
+        else:
+            # Conservative fallback when available-memory information is absent.
+            safe_limit_mb = 128
+        allocation_mb = min(requested_mb, safe_limit_mb)
         stop_evt = threading.Event()
         self.stop_events["mem_leak"] = stop_evt
 
         def _mem_leak_worker():
             buffers = []
-            logger.info("[STRESSOR] Starting Memory Leak Simulation...")
-            allocated = 0
-            while not stop_evt.is_set() and allocated < mb_to_allocate:
-                try:
-                    # Allocate 20MB chunks
-                    chunk = bytearray(20 * 1024 * 1024)
+            page_size = 4096
+            chunk_size = 16 * 1024 * 1024
+            target_bytes = allocation_mb * 1024 * 1024
+            deadline = time.monotonic() + duration_sec
+            allocated_bytes = 0
+            logger.info("[STRESSOR] Starting %s MB memory pressure for %s seconds.", allocation_mb, duration_sec)
+            try:
+                while (not stop_evt.is_set() and allocated_bytes < target_bytes
+                       and time.monotonic() < deadline):
+                    remaining = target_bytes - allocated_bytes
+                    chunk = bytearray(min(chunk_size, remaining))
+                    # Writing one byte per page forces the OS to commit physical
+                    # pages instead of leaving a merely reserved virtual range.
+                    for offset in range(0, len(chunk), page_size):
+                        chunk[offset] = 1
                     buffers.append(chunk)
-                    allocated += 20
-                    time.sleep(0.3)
-                except MemoryError:
-                    break
-            logger.info("[STRESSOR] Memory Leak target reached or stopped.")
-            while not stop_evt.is_set():
-                time.sleep(1)
-            del buffers
+                    allocated_bytes += len(chunk)
+                # Keep strong references alive until the bounded stress period
+                # expires, or until the existing Stop control is used.
+                remaining_seconds = max(0.0, deadline - time.monotonic())
+                stop_evt.wait(remaining_seconds)
+            except MemoryError:
+                logger.warning("[STRESSOR] Memory pressure stopped before target due to MemoryError.")
+            finally:
+                buffers.clear()
+                logger.info("[STRESSOR] Memory pressure released after %.1f seconds.", duration_sec)
 
         thread = threading.Thread(target=_mem_leak_worker, daemon=True)
         thread.start()
         self.active_stressors["mem_leak"] = thread
-        return {"status": "started", "type": "Memory Leak", "allocated_target_mb": mb_to_allocate}
+        return {"status": "started", "type": "Memory Leak", "allocated_target_mb": allocation_mb,
+                "requested_target_mb": requested_mb, "duration_sec": duration_sec}
 
     def trigger_cpu_spike(self, duration_sec: int = 30) -> dict:
         """Simulates high CPU load."""

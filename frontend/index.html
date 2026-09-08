@@ -38,7 +38,7 @@
                 </div>
                 <div class="metric-badge">
                     <i class="fa-solid fa-shield-cat text-green"></i>
-                    <span>Crashes Prevented: <strong id="crashes-prevented-count">0</strong></span>
+                    <span>Successful Mitigations: <strong id="successful-mitigations-count">0</strong></span>
                 </div>
             </div>
         </header>
@@ -57,6 +57,7 @@
                     <div class="progress-bar-bg">
                         <div class="progress-fill fill-cpu" id="cpu-bar" style="width: 0%;"></div>
                     </div>
+                    <div class="pressure-reading">Pressure: <strong id="cpu-pressure">N/A</strong></div>
                     <div class="sub-metrics" id="cpu-cores-list">
                         <!-- Cores injected dynamically -->
                     </div>
@@ -75,6 +76,7 @@
                         <span>Used: <strong id="ram-used-gb">0.0 GB</strong></span>
                         <span>Total: <strong id="ram-total-gb">0.0 GB</strong></span>
                     </div>
+                    <div class="pressure-reading">RAM pressure: <strong id="memory-pressure">N/A</strong> · Swap: <strong id="swap-pressure">N/A</strong></div>
                 </div>
 
                 <!-- I/O & Network Card -->
@@ -87,18 +89,20 @@
                         <div class="io-box">
                             <i class="fa-solid fa-arrow-down-long"></i>
                             <div>
-                                <span class="label">Read Traffic</span>
+                                <span class="label">Read Total</span>
                                 <strong id="io-read-bytes">0 KB/s</strong>
                             </div>
                         </div>
                         <div class="io-box">
                             <i class="fa-solid fa-arrow-up-long"></i>
                             <div>
-                                <span class="label">Write Traffic</span>
+                                <span class="label">Write Total</span>
                                 <strong id="io-write-bytes">0 KB/s</strong>
                             </div>
                         </div>
                     </div>
+                    <div class="pressure-reading">I/O pressure: <strong id="io-pressure">N/A</strong> · Network: <strong id="network-pressure">N/A</strong></div>
+                    <div class="pressure-reading" id="prediction-summary">Early warning: N/A</div>
                 </div>
             </section>
 
@@ -115,7 +119,7 @@
                             <i class="fa-solid fa-brain"></i>
                             <div class="agent-info">
                                 <strong>Memory Agent</strong>
-                                <span>RAM & Compression</span>
+                                <span>RAM Pressure</span>
                             </div>
                             <span class="dot"></span>
                         </div>
@@ -174,7 +178,58 @@
                 </div>
             </section>
 
-            <!-- Row 3: Process Guardian & Interactive Stress Studio -->
+            <!-- Row 3: Cross-Subsystem Bargaining & Reversible Cascade -->
+            <section class="bargaining-row">
+                <div class="glass-card bargaining-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-scale-balanced"></i> Resource Bargaining State</h3>
+                        <span class="sub-text" id="bargaining-outcome">Awaiting telemetry</span>
+                    </div>
+                    <div class="bargaining-grid">
+                        <div class="bargaining-block">
+                            <span class="bargaining-label">Current System Pressure</span>
+                            <strong id="pressure-summary">CPU 0% · RAM 0%</strong>
+                            <span class="bargaining-detail" id="active-agents-summary">Agents monitoring</span>
+                        </div>
+                        <div class="bargaining-block">
+                            <span class="bargaining-label">Consensus Plan</span>
+                            <strong id="consensus-summary">No plan selected</strong>
+                            <span class="bargaining-detail" id="selection-reason">No arbitration result yet</span>
+                        </div>
+                        <div class="bargaining-block">
+                            <span class="bargaining-label">Current Action / Protection</span>
+                            <strong id="action-summary">No action</strong>
+                            <span class="bargaining-detail" id="protection-summary">User disruption: unavailable</span>
+                        </div>
+                        <div class="bargaining-block">
+                            <span class="bargaining-label">Adaptive Memory</span>
+                            <strong id="adaptive-memory-summary">Cold start</strong>
+                            <span class="bargaining-detail" id="adaptive-memory-detail">No recorded outcomes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card bargaining-details-card">
+                    <div class="bargaining-list-block">
+                        <span class="bargaining-label">Agent proposals / bids</span>
+                        <ul class="bargaining-list" id="proposal-bids-list"><li>Awaiting proposals</li></ul>
+                    </div>
+                    <div class="bargaining-list-block">
+                        <span class="bargaining-label">Negotiation & conflicts</span>
+                        <ul class="bargaining-list" id="negotiation-list"><li>No conflicts reported</li></ul>
+                    </div>
+                    <div class="bargaining-list-block">
+                        <span class="bargaining-label">Cascade & observed outcome</span>
+                        <ul class="bargaining-list" id="cascade-list"><li>Mitigation has not started</li></ul>
+                    </div>
+                    <div class="bargaining-list-block">
+                        <span class="bargaining-label">Rejected safer alternatives</span>
+                        <ul class="bargaining-list" id="rejected-list"><li>No alternatives rejected</li></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Row 4: Process Guardian & Interactive Stress Studio -->
             <section class="bottom-row">
                 
                 <!-- Process Table -->

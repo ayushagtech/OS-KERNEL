@@ -7,22 +7,30 @@ class NetworkAgent(BaseAgent):
 
     def evaluate(self, telemetry: Dict[str, Any]) -> List[Proposal]:
         proposals = []
-        net_high = telemetry.get("network", {}).get("is_high", False)
+        network_data = telemetry.get("network", {})
+        network_pressure = network_data.get("pressure")
+        net_high = network_pressure is not None and network_pressure >= 0.60
         processes = telemetry.get("processes", [])
 
         if net_high:
             for proc in processes[:3]:
-                if proc.get("is_background", True):
+                if proc.get("is_background", True) and not proc.get("is_foreground"):
                     pid = proc.get("pid")
                     name = proc.get("name", "Unknown")
+                    process_load = min(100.0, (proc.get("cpu_percent", 0) or 0) +
+                                       (proc.get("memory_percent", 0) or 0) * 2.0)
                     proposals.append(Proposal(
                         agent_name=self.name,
                         target_pid=pid,
                         process_name=name,
                         action="LOWER_PRIORITY",
-                        health_gain=15.0,
-                        disruption_cost=5.0,
-                        rationale=f"Network bandwidth saturation. Throttle background socket buffers for {name}."
+                        resource_relief=40.0 + 0.20 * process_load,
+                        stability_improvement=50.0 + 0.15 * process_load,
+                        security_confidence=0.0,
+                        reversibility=95.0,
+                        user_disruption=self.process_user_disruption(proc, action_scale=0.40),
+                        collateral_cost=self.process_collateral_cost(proc, "LOWER_PRIORITY"),
+                        rationale=f"Network saturation is reported; reduce scheduling priority for non-foreground task {name}."
                     ))
 
         return proposals
