@@ -34,7 +34,7 @@ To overcome the aforementioned limitations, the present invention discloses an *
 2. **Multi-Agent Resource Barter Protocol**: A structured Inter-Process Communication (IPC) bidding mechanism wherein domain agents evaluate system bottlenecks, assert resource states, and submit trade-off proposals.
 3. **Decision Arbiter and Closed-Loop Utility Engine**: An arbiter module that evaluates agent proposals against a global utility objective function defined as:
    $$Utility = \Delta \text{System Health} - \Delta \text{User Disruption}$$
-4. **Hierarchical Non-Destructive Control Hooks**: A cascade of non-lethal OS control primitives (`cgroups v2`, process freezing/unfreezing, priority shifting via `nice`/`SetPriorityClass`, CPU affinity clamping, and on-demand zRAM page compression) executed in lieu of process termination.
+4. **Hierarchical Non-Destructive Control Hooks**: A cascade of non-lethal OS control primitives (process freezing/unfreezing, priority shifting, and CPU affinity clamping) executed without process termination. zRAM compression is not currently implemented.
 
 ---
 
@@ -98,7 +98,7 @@ Decisions are mapped to fine-grained operating system primitives:
    $$Utility = \Delta \text{System Health} - \Delta \text{User Disruption}$$
    wherein proposals yielding a negative net utility score are automatically disqualified.
 
-3. The system of claim 1, wherein said non-destructive kernel control primitives comprise process freezing (`SIGSTOP`/`cgroup.freeze`), scheduling priority demotion (`nice`/`sched_setattr`), CPU core affinity restriction, and dynamic zRAM page memory compression.
+3. The system of claim 1, wherein said non-destructive control primitives comprise process freezing, scheduling priority demotion, and CPU core affinity restriction.
 
 4. The system of claim 1, further comprising a security agent configured to inspect process digital signatures, execution hashes, and window focus context to differentiate legitimate application resource spikes from unauthorized crypto-mining or malware execution.
 

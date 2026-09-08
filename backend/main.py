@@ -47,8 +47,8 @@ if HAS_FASTAPI:
         return JSONResponse(content=data)
 
     @app.post("/api/stress/memory")
-    async def trigger_memory_stress(mb: int = 500):
-        res = workload_manager.trigger_memory_leak(mb_to_allocate=mb)
+    async def trigger_memory_stress(mb: int = 500, duration: int = 30):
+        res = workload_manager.trigger_memory_leak(mb_to_allocate=mb, duration_sec=duration)
         return JSONResponse(content=res)
 
     @app.post("/api/stress/cpu")
